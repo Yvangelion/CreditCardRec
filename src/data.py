@@ -22,7 +22,10 @@ travel_cards = [
     {"Travel CB": 3, "Travel Types": "Airfare, Hotels, Car Rentals", "Spend Cap": "No Cap", "Bank Name": "Barclays", "Card Name": "AARP Travel Rewards", "Type": "MC", "SUB": 100, "FTF": 0, "Travel Benefits": "Baggage Loss/Delay Insurance, Car Rental CDW, Travel Accident Insurance, Trip Cancell./ Interrup. Insurance", "Membership": "Open (AARP membership not req.)"},
     {"Travel CB": 3, "Travel Types": "Most Travel + Global Entry", "Spend Cap": "No Cap", "Bank Name": "Summit CU", "Card Name": "Ultimate CashPerks", "Type": "Visa", "SUB": 0, "FTF": 0, "Travel Benefits": "None", "Membership": "Open, $5 [H]"},
     {"Travel CB": 3, "Travel Types": "Most Travel", "Spend Cap": "$2,500/ quarter", "Bank Name": "Bank of America", "Card Name": "Customized Cash", "Type": "Visa", "SUB": 200, "FTF": 3, "Travel Benefits": "None", "Membership": "Open"},
-    {"Travel CB": 3, "Travel Types": "Most Travel", "Spend Cap": "$2,000/ quarter", "Bank Name": "Huntington", "Card Name": "Voice Rewards", "Type": "MC", "SUB": 0, "FTF": 0, "Travel Benefits": "None", "Membership": "7 States [I]"}
+    {"Travel CB": 3, "Travel Types": "Most Travel", "Spend Cap": "$2,000/ quarter", "Bank Name": "Huntington", "Card Name": "Voice Rewards", "Type": "MC", "SUB": 0, "FTF": 0, "Travel Benefits": "None", "Membership": "7 States [I]"},
+    
+    # Annaul fee cards
+    {"Travel CB": 3, "Travel Types": "Most Travel", "Spend Cap": "No Cap", "Bank Name": "AmEx", "Card Name": "AmEx Gold", "Type": "AmEx", "SUB": 900, "FTF": 0, "Travel Benefits": "None", "Membership": "Open", "Annual Fee": 250}
 ]
 
 

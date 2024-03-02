@@ -13,6 +13,10 @@ def convert_spend_cap(spend_cap):
     
 
 def calculate_cashback(spending, card, string_name, num_years=1):
+    #print(card)
+    
+    fee = card.get("Annual Fee", 0)
+        
     max_cap = convert_spend_cap(card["Spend Cap"])
     
     if max_cap != float('inf'):
@@ -29,9 +33,9 @@ def calculate_cashback(spending, card, string_name, num_years=1):
             cashback_within_cap = max_cap * card[f"{string_name}"] / 100
             cashback_beyond_cap = (annual_spending - (max_cap * num_years)) * 0.01  # 1% cashback on the rest
                         
-            return cashback_within_cap + cashback_beyond_cap + card["SUB"]
+            return cashback_within_cap + cashback_beyond_cap + card["SUB"] - fee
     
-    return ((float(spending)*12) * card[f"{string_name}"] / 100) * num_years + card["SUB"]
+    return ((float(spending)*12) * card[f"{string_name}"] / 100) * num_years + card["SUB"] - fee
 
 
 def find_best_card(spending, tf_sub, data, string_name):
@@ -67,15 +71,15 @@ def find_best_card(spending, tf_sub, data, string_name):
 # "Travel CB" 
 # dining_data
 # travel_data
-string_name = "Dining CB"
-data = dining_data
+string_name = "Travel CB"
+data = travel_cards
 
 
 user_responses = {
     "Gas": 200,
     "Supermarket": 300,
-    "Dining": 1600,
-    "Travel": 600,
+    "Dining": 10000,
+    "Travel": 10000,
     "Other": 100
 }
 
@@ -86,8 +90,8 @@ best_card_with_sub, max_cashback_sub= find_best_card(spending, tf_sub , data, st
 tf_sub =  False 
 best_card_without_sub,max_cashback_no_sub = find_best_card(spending, tf_sub, data, string_name)
 
-print(spending, max_cashback_sub)
-print(spending,max_cashback_no_sub)
+print(spending*12, max_cashback_sub)
+print(spending*12,max_cashback_no_sub)
 
 
     
