@@ -1,5 +1,5 @@
 import re
-from data import travel_cards, dining_data
+from data import *
 
 
 
@@ -17,7 +17,10 @@ def calculate_cashback(spending, card, string_name, num_years=1):
     
     fee = card.get("Annual Fee", 0)
         
-    max_cap = convert_spend_cap(card["Spend Cap"])
+    if "Spend Cap" in card:
+        max_cap = convert_spend_cap(card["Spend Cap"])
+    else:
+        max_cap = float('inf')
     
     if max_cap != float('inf'):
         if '/ month' in card["Spend Cap"].lower():
@@ -40,14 +43,27 @@ def calculate_cashback(spending, card, string_name, num_years=1):
 
 def find_best_card(spending, tf_sub, data, string_name):
     best_cards = []
-    max_cashbacks = [0, 0, 0, 0, 0,0, 0, 0, 0, 0]  # List to store the top 3 cashback values
+    max_cashbacks = [0, 0, 0, 0, 0]  # List to store the top 3 cashback values
 
     if tf_sub:
         for card in data:
-            card["SUB"] = card["SUB"]
+            
+            if isinstance(card["SUB"], str):
+                if card["SUB"].lower() == "no sub":
+                    card["SUB"] = 0
+                elif card["SUB"].lower() != "no sub":
+                    card["SUB"] = 0
+                else:
+                    card["SUB"] = float(card["SUB"])
+                    
+            elif isinstance(card["SUB"], int) or isinstance(card["SUB"], float):
+                card["SUB"] = float(card["SUB"])
+            else:
+                card["SUB"] = 0
+                
             cashback = calculate_cashback(spending, card, string_name)
 
-            for i in range(10):
+            for i in range(len(data)):
                 if cashback > max_cashbacks[i]:
                     max_cashbacks.insert(i, cashback)
                     best_cards.insert(i, card['Card Name'])
@@ -57,46 +73,96 @@ def find_best_card(spending, tf_sub, data, string_name):
             card["SUB"] = 0
             cashback = calculate_cashback(spending, card, string_name)
 
-            for i in range(10):
+            for i in range(len(data)):
                 if cashback > max_cashbacks[i]:
                     max_cashbacks.insert(i, cashback)
                     best_cards.insert(i, card['Card Name'])
                     break
 
-    return best_cards[:10], max_cashbacks[:10]
-
-
-#Options
-# "Dining CB"
-# "Travel CB" 
-# dining_data
-# travel_data
-string_name = "Travel CB"
-data = travel_cards
+    cards_cashbacks_dict = dict(zip(best_cards, max_cashbacks))
+    return best_cards[:5], max_cashbacks[:5], cards_cashbacks_dict
 
 
 user_responses = {
     "Gas": 200,
     "Supermarket": 300,
-    "Dining": 10000,
-    "Travel": 10000,
+    "Dining": 300,
+    "Travel": 400,
     "Other": 100
 }
 
+categories = ["Dining", "Travel", "Other"]
 
-spending = user_responses["Dining"]
-tf_sub =  True
-best_card_with_sub, max_cashback_sub= find_best_card(spending, tf_sub , data, string_name)
-tf_sub =  False 
-best_card_without_sub,max_cashback_no_sub = find_best_card(spending, tf_sub, data, string_name)
+best_dining = [] 
+best_travel = []
+best_other = []
 
-print(spending*12, max_cashback_sub)
-print(spending*12,max_cashback_no_sub)
-
-
+for category in categories:
     
-print("Best card with SUB:", best_card_with_sub)
-print("Best card without SUB:", best_card_without_sub)
+    if category == "Dining":
+        data = dining_data
+        string_name = f"{category} CB"
+        
+    elif category == "Travel":
+        data = travel_cards
+        string_name = f"{category} CB"
+        
+    elif category == "Other":
+        data = other_cards
+        string_name = "CB"
+        
+    spending = user_responses[category]
+
+    tf_sub = True
+    best_card_with_sub, max_cashback_sub, cards_cashbacks_dict = find_best_card(spending, tf_sub, data, string_name)
+
+    tf_sub = False
+    best_card_without_sub, max_cashback_no_sub, cards_cashbacks_dict_no_sub = find_best_card(spending, tf_sub, data, string_name)
+    
+    
+    if category == "Dining":
+        best_dining.append(cards_cashbacks_dict)
+        
+    elif category == "Travel":
+        best_travel.append(cards_cashbacks_dict)
+            
+    elif category == "Other":
+        best_other.append(cards_cashbacks_dict)
+        
 
 
 
+    print(category)
+    print("----------------------------------------------------------")
+    print("Best card with sub:", best_card_with_sub[0])
+    print("Best card with NO sub:", best_card_without_sub[0])
+    print(f"Category: {category}, Spending: {spending * 12}, Max Cashback with SUB: {max_cashback_sub}")
+    print(f"Category: {category}, Spending: {spending * 12}, Max Cashback without SUB: {max_cashback_no_sub}")
+
+    print("Cards ranked with SUB:", best_card_with_sub)
+    print("Cards ranked without SUB:", best_card_without_sub)
+    print("Rankings")
+    for g, (key, value) in enumerate(cards_cashbacks_dict.items(), 1):
+        if g <= 10:
+            print(f"{g}: {key} - {value}")
+                
+    print(" ")
+
+        
+
+
+merged_dict = {}
+for category in [best_dining, best_travel, best_other]:
+    for d in category:
+        for key, value in d.items():
+            if key in merged_dict:
+                merged_dict[key] += value
+            else:
+                merged_dict[key] = value
+
+# Sort the merged dictionary by keys and print the result
+sorted_merged_dict = dict(sorted(merged_dict.items(), key=lambda item: item[1], reverse=True))
+
+for x, (key, value) in enumerate(sorted_merged_dict.items(), 1):
+    if x <= 10:
+        print(f"{x}: {key} - {value}")
