@@ -16,6 +16,7 @@ def calculate_cashback(spending, card, string_name, num_years=1):
     #print(card)
     
     fee = card.get("Annual Fee", 0)
+    credits_possible = card.get("Credits", 0)
         
     if "Spend Cap" in card:
         max_cap = convert_spend_cap(card["Spend Cap"])
@@ -36,15 +37,14 @@ def calculate_cashback(spending, card, string_name, num_years=1):
             cashback_within_cap = max_cap * card[f"{string_name}"] / 100
             cashback_beyond_cap = (annual_spending - (max_cap * num_years)) * 0.01  # 1% cashback on the rest
                         
-            return cashback_within_cap + cashback_beyond_cap + card["SUB"] - fee
+            return cashback_within_cap + cashback_beyond_cap + card["SUB"] - fee + credits_possible
     
-    return ((float(spending)*12) * card[f"{string_name}"] / 100) * num_years + card["SUB"] - fee
+    return ((float(spending)*12) * card[f"{string_name}"] / 100) * num_years + card["SUB"] - fee + credits_possible
 
 
 def find_best_card(spending, tf_sub, data, string_name):
     best_cards = []
-    max_cashbacks = [0, 0, 0, 0, 0]  # List to store the top 3 cashback values
-
+    max_cashbacks = [0, 0, 0, 0, 0] 
     if tf_sub:
         for card in data:
             
@@ -88,7 +88,7 @@ user_responses = {
     "Supermarket": 300,
     "Dining": 300,
     "Travel": 400,
-    "Other": 100
+    "Other": 1000
 }
 
 categories = ["Dining", "Travel", "Other"]

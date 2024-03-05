@@ -299,6 +299,9 @@ dining_data = [
 
 # this data is not up to date
 other_cards = [
+    {"CB": 3, "Travel Types": "Most Travel", "Spend Cap": "No Cap", "Bank Name": "Capital One", "Card Name": "Venture X", "Type": "Visa", "SUB": 750, "FTF": 0, "Travel Benefits": "None", "Membership": "Open", "Annual Fee": 395, "Credits": 400},
+    
+    
     {"CB": 3, "FTF": "No FTF", "Type": "MC", "Bank Name": "Logix FCU", "Card Name": "Platinum Rewards", "SUB": 100, "Car Rental CDW": "Y", "Travel Accident Ins.": "Y", "Trip Canc./ Interr.": "Y", "Ext. Warr.": "N", "Purch. Prot.": "N", "Cell Prot.": "N", "Price Prot.": "N", "Bag Delay": "N", "Membership": "Am. Cons. Counc., 8 States + D.C., req. $100k [A]"},
     {"CB": 2.625, "FTF": 3, "Type": "Visa", "Bank Name": "Bank of America", "Card Name": "Unlimited Cash Rewards", "SUB": 200, "Car Rental CDW": "N", "Travel Accident Ins.": "N", "Trip Canc./ Interr.": "N", "Ext. Warr.": "N", "Purch. Prot.": "N", "Cell Prot.": "N", "Price Prot.": "N", "Bag Delay": "N", "Membership": "Open, req. $100k [B]"},
     {"CB": 2.5, "FTF": "No FTF", "Type": "Visa", "Bank Name": "Alliant CU", "Card Name": "Cashback Visa Signature", "SUB": "No SUB", "Car Rental CDW": "Y", "Travel Accident Ins.": "Y", "Trip Canc./ Interr.": "N", "Ext. Warr.": "Y", "Purch. Prot.": "Y", "Cell Prot.": "N", "Price Prot.": "N", "Bag Delay": "N", "Membership": "Foster Care to Success, $5, req. checking, e-deposit and $1,000 [C]"},
