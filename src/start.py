@@ -38,7 +38,7 @@ def calculate_cashback(spending, card, string_name, num_years=1):
                         
             return cashback_within_cap + cashback_beyond_cap + card["SUB"] - fee + credits_possible
     
-    return ((float(spending)*12) * card[f"{string_name}"] / 100) * num_years + card["SUB"] - fee + credits_possible
+    return round(((float(spending)*12) * card[f"{string_name}"] / 100) * num_years + card["SUB"] - fee + credits_possible, 2)
 
 
 def find_best_card(spending, tf_sub, data, string_name):
@@ -64,7 +64,6 @@ def find_best_card(spending, tf_sub, data, string_name):
             cashback = calculate_cashback(spending, card, string_name)
 
             for i in range(len(data)):
-                print(i)
                 if cashback > max_cashbacks[i]:
                     max_cashbacks.insert(i, cashback)
                     best_cards.insert(i, card['Card Name'])
@@ -127,12 +126,15 @@ def credit_app(user_responses):
         
         if category == "Dining":
             best_dining.append(cards_cashbacks_dict)
+            dining_dict = cards_cashbacks_dict 
             
         elif category == "Travel":
             best_travel.append(cards_cashbacks_dict)
+            travel_dict = cards_cashbacks_dict
                 
         elif category == "Other":
             best_other.append(cards_cashbacks_dict)
+            other_dict = cards_cashbacks_dict
             
 
 
@@ -152,9 +154,14 @@ def credit_app(user_responses):
                 print(f"{g}: {key} - {value}")
                     
         print(" ")
+    
 
-            
+    # sorted dicts
+    dining_dict_sorted = dict(sorted(dining_dict.items(), key=lambda item: item[1], reverse=True))
 
+    travel_dict_sorted = dict(sorted(travel_dict.items(), key=lambda item: item[1], reverse=True))
+
+    other_dict_sorted = dict(sorted(other_dict.items(), key=lambda item: item[1], reverse=True))
 
     merged_dict = {}
     for category in [best_dining, best_travel, best_other]:
@@ -166,10 +173,11 @@ def credit_app(user_responses):
                     merged_dict[key] = round(value, 2)
 
     # Sort the merged dictionary by keys and print the result
-    sorted_merged_dict = dict(sorted(merged_dict.items(), key=lambda item: item[1], reverse=True))
+    sorted_merged_dict = dict(sorted(merged_dict.items(), key=lambda item: (item[1]), reverse=True))
 
     for x, (key, value) in enumerate(sorted_merged_dict.items(), 1):
         if x <= 10:
-            print(f"{x}: {key} - {value}")
+            pass
+            #print(f"{x}: {key} - {value}")
     
-    return sorted_merged_dict
+    return sorted_merged_dict, dining_dict_sorted, travel_dict_sorted, other_dict_sorted

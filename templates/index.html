@@ -30,26 +30,86 @@
 
         <input type="submit" value="Submit">
     </form>
-    <center>
-    <table>
+    <h2>User Input</h2>
+
+    <h2>Response</h2>
+
+    <!-- Best case response  -->
+    <table align="Center"> 
         {% if response is not none %}
-            <tr>
-                <th colspan="2">Response:</th>
-            </tr>
-            {% for key, value in response.items() %}
-                <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ value }}</td>
-                </tr>
-            {% endfor %}
+        <tr>
+            <th colspan="2">Overall Response:</th>
+        </tr>
+        {% for key, value in response['Best'].items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
         {% elif response is none %}
-            <tr>
-                <td colspan="2">No response available.</td>
-            </tr>
+        <tr>
+            <td colspan="2">Overall: Awaiting Input</td>
+        </tr>
         {% endif %}
-        </table>
-    </center>
-    
+    </table>
+
+    <!-- dining -->
+    <table align="Center"> 
+        {% if response is not none %}
+        <tr>
+            <th colspan="2">Dining Response:</th>
+        </tr>
+        {% for key, value in response['Dining'].items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+        {% elif response is none %}
+        <tr>
+            <td colspan="2">Dining: Awaiting Input</td>
+        </tr>
+        {% endif %}
+    </table>
+
+    <!-- travel -->
+    <table align="Center"> 
+        {% if response is not none %}
+        <tr>
+            <th colspan="2">Travel Response:</th>
+        </tr>
+        {% for key, value in response['Travel'].items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+        {% elif response is none %}
+        <tr>
+            <td colspan="2">Travel: Awaiting Input</td>
+        </tr>
+        {% endif %}
+    </table>
+
+    <!-- Other -->
+    <table align="Center"> 
+        {% if response is not none %}
+        <tr>
+            <th colspan="2">2% Or More cards Response:</th>
+        </tr>
+        {% for key, value in response['Other'].items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+        {% elif response is none %}
+        <tr>
+            <td colspan="2">Other: Awaiting Input</td>
+        </tr>
+        {% endif %}
+    </table>
+
 
 </body>
 
