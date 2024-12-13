@@ -7,6 +7,8 @@ def linear_function(n):
 # Input list
 n_values = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
+# n_values = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
 # Calculate the output for each value of n
 output_values = [linear_function(n) for n in n_values]
 
