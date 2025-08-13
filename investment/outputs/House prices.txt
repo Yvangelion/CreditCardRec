@@ -1,0 +1,13 @@
+| Period    | CAGR      |
+| --------- | --------- |
+| 1980–1990 | **5.84%** |
+| 1990–2000 | **3.88%** |
+| 2000–2005 | **6.51%** |
+| 2005–2015 | **2.25%** |
+| 2015–2025 | **3.41%** |
+
+
+Average annual growth over the entire 45 years: ≈ 4.25% per year
+2.5 better estimate based on observations 
+
+Growth rates vary a lot by decade, with highest in 2000–2005 (~6.5%) and lowest in 2005–2015 (~2.25%)
